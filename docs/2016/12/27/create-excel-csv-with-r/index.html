@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>RからでExcelで開けるCSVを出力する &middot; Kazuki Tamura</title>
+        <meta name="description" content="はじめに Rからcsvファイルを出力したとき，Excelがインストールされていて，csvがExcelに関連付けされている環境では，出力したcs">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.25.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="../../../../dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                            </h1>
+                        
+                        <a class="button-square" href="../../../../index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/kzktmr">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="kzktmr.github.io" href="https://kzktmr.github.io">kzktmr.github.io</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">RからでExcelで開けるCSVを出力する</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2016-12-27" itemprop="datePublished">Tue, Dec 27, 2016</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://kzktmr.github.io" itemprop="url" rel="author">Kazuki Tamura</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+<!-- /BLOGDOWN-BODY-BEFORE -->
+<div class="section level2">
+<h2>はじめに</h2>
+<p><code>R</code>から<code>csv</code>ファイルを出力したとき，<code>Excel</code>がインストールされていて，<code>csv</code>が<code>Excel</code>に関連付けされている環境では，出力した<code>csv</code>ファイルをダブルクリックすると<code>Excel</code>がファイルを開きますが，残念ながら文字化けしてしまいます。これは，出力したファイルのエンコードが「<code>UTF-8</code>」なのに，Excelが「<code>SHIFT-JIS</code>」だと思って開いてしまうことが原因のようです。</p>
+</div>
+<div class="section level2">
+<h2>方法</h2>
+<p>この問題を解決するには，どうすればいいかというと，</p>
+<ul>
+<li><a href="http://qiita.com/mashiro/items/0d0b9bbb0f4a6cca620c">Win/Mac どちらの Excel でも正しく開ける Unicode な csv の出力方法</a></li>
+</ul>
+<p>にあるように，</p>
+<ol style="list-style-type: decimal">
+<li><code>Windows</code>の場合は，<code>BOM</code>付き<code>UTF-8</code>の<code>csv</code>にする，</li>
+<li><code>Mac</code>の場合は，<code>BOM</code>付き<code>UTF-16LE</code>の<code>tsv</code>にする，</li>
+</ol>
+<p>と，うまくいくようです。<code>R</code>の場合，例えば以下のように実現することができます。</p>
+<div id="windows" class="section level3">
+<h3><code>Windows</code>の場合</h3>
+<p><code>readr</code>バッケージの<code>write_excel_csv()</code>関数を使いましょう。これで，<code>BOM</code>付き<code>UTF-8</code>の<code>csv</code>が出力されます。</p>
+<pre class="r"><code>library(readr)
+write_excel_csv(hoge, &quot;hoge_win.csv&quot;)</code></pre>
+</div>
+<div id="mac" class="section level3">
+<h3><code>Mac</code>の場合</h3>
+<p>残念ながら，<code>readr</code>パッケージにも<code>Mac</code>用の関数は用意されていないので，自分でなんとかするしかありません。<code>readr</code>パッケージの<code>format_tsv()</code>で作った文字列を<code>iconv()</code>で変換すればどうかな…，と思ったのですが，なぜか<code>R</code>の<code>iconv()</code>関数で<code>UTF-16LE</code>に変換しようとすると，エラーが出てうまくいきません。</p>
+<pre class="r"><code>iconv(&quot;hoge&quot;, &quot;UTF-8&quot;, &quot;UTF-16LE&quot;)</code></pre>
+<pre><code>## Error in iconv(&quot;hoge&quot;, &quot;UTF-8&quot;, &quot;UTF-16LE&quot;):  文字列の中に nul が埋め込まれています: &#39;h\0o\0g\0e\0&#39;</code></pre>
+<p>仕方がないので，<code>system()</code>からシステムの<code>iconv</code>を使って変換する関数を作ることにしました。</p>
+<pre class="r"><code>write_excel_mac_csv &lt;- function(x, path, na = &quot;NA&quot;){
+  tmp &lt;- tempfile()
+  readr::write_tsv(x, tmp, na = na)
+  path &lt;- paste0(&quot;&#39;&quot;, path, &quot;&#39;&quot;)
+  system(paste(&quot;(printf &#39;\xff\xfe&#39;; iconv -f utf-8 -t utf-16le&quot;, tmp, &quot;) &gt;&quot;, path))
+}</code></pre>
+<p><code>Gist</code>に置いてあります。リンクは<a href="https://gist.github.com/kzktmr/f8f6c4447ede5ee56418fe4c2b136594">こちら</a>。</p>
+<pre class="r"><code>library(devtools)
+source_gist(&quot;f8f6c4447ede5ee56418fe4c2b136594&quot;, filename = &quot;write_excel_mac_csv.R&quot;)</code></pre>
+<p>これで，<code>BOM</code>付き<code>UTF-16LE</code>の<code>tsv</code>が出力されます。<code>tsv</code>フィイルなのですが，拡張子は<code>.csv</code>なので（<code>Excel</code>に関連づけられているので）ダブルクリックで開ける，という少々トリッキーな感じがやや気持ち悪いですが。</p>
+<pre class="r"><code>write_excel_mac_csv(hoge, &quot;hoge_mac.csv&quot;)</code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2>注意</h2>
+<p><code>write_excel_mac_csv()</code>で出力したファイルは，<code>Mac</code>だけでなく<code>Windwos</code>の<code>Excel</code>でも開けます（<code>write_excel_mac_csv()</code>関数は<code>Windows</code>では使えませんが）。</p>
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="../../../../tags/r/">R</a>, 
+            
+                <a href="../../../../tags/excel/">Excel</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=R%e3%81%8b%e3%82%89%e3%81%a7Excel%e3%81%a7%e9%96%8b%e3%81%91%e3%82%8bCSV%e3%82%92%e5%87%ba%e5%8a%9b%e3%81%99%e3%82%8b&url=%2f2016%2f12%2f27%2fcreate-excel-csv-with-r%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2016%2f12%2f27%2fcreate-excel-csv-with-r%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2016%2f12%2f27%2fcreate-excel-csv-with-r%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2016 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../../../../js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="../../../../js/jquery.fitvids.js"></script>
+        <script src="../../../../js/scripts.js"></script>
+    </body>
+</html>
+

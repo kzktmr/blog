@@ -6,10 +6,19 @@
     <description>Recent content on kzktmr&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 04 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Dec 2016 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>RからでExcelで開けるCSVを出力する</title>
+      <link>/2016/12/27/create-excel-csv-with-r/</link>
+      <pubDate>Tue, 27 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/12/27/create-excel-csv-with-r/</guid>
+      <description>はじめに Rからcsvファイルを出力したとき，Excelがインストールされていて，csvがExcelに関連付けされている環境では，出力したcs</description>
+    </item>
     
     <item>
       <title>ggplot2を使って都道府県塗り分け地図を描く関数</title>
