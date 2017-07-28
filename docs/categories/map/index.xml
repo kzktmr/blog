@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Map on kzktmr&#39;s blog</title>
+    <link>/categories/map/</link>
+    <description>Recent content in Map on kzktmr&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sun, 04 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/map/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ggplot2を使って都道府県塗り分け地図を描く関数</title>
+      <link>/2016/12/04/choropleth-map-of-japan-with-ggplot2/</link>
+      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/2016/12/04/choropleth-map-of-japan-with-ggplot2/</guid>
+      <description>都道府県の塗り分け地図を簡単に描くには，NipponパッケージのJapanPrefecturesMap()関数が便利です。 library(Nippon) この関数を修正し</description>
+    </item>
+    
+  </channel>
+</rss>

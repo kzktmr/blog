@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2016/12/04/choropleth-map-of-japan-with-ggplot2/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2016/11/28/make-hyphens-to-minus-on-tikzdevice/</loc>
     <lastmod>2016-11-28T00:00:00+00:00</lastmod>
   </url>
@@ -28,6 +33,12 @@
   </url>
   
   <url>
+    <loc>/tags/choropleth-map/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/fukuoka/</loc>
     <lastmod>2015-12-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -35,13 +46,19 @@
   
   <url>
     <loc>/tags/ggplot2/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/ggplot2/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/japan/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -58,6 +75,12 @@
   </url>
   
   <url>
+    <loc>/categories/map/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/opendata/</loc>
     <lastmod>2015-12-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -65,25 +88,25 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2015-12-22T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -101,7 +124,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

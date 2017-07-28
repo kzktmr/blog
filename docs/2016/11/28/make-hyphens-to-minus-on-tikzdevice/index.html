@@ -85,12 +85,10 @@ data &lt;- data.frame(x = x, y = y)
 g0 &lt;- ggplot(data, aes(x = x, y = y)) + geom_point()
 print(g0)</code></pre>
 <p><img src="../../../../post/2016-11-28-tikzdevice-latex-label_files/figure-html/normal_plot-1.png" width="672" /></p>
-<p><code>tikz</code>コマンドを使えば，簡単に</p>
+<p><code>tikz</code>コマンドを使えば，簡単に<code>LaTeX</code>用のファイルを作成できます。</p>
 <pre class="r"><code>tikz(file = &quot;g0.tex&quot;, width=7, height=5, standAlone=TRUE)
   print(g0)
 dev.off()</code></pre>
-<pre><code>## quartz_off_screen 
-##                 2</code></pre>
 <p>できた<code>LaTeX</code>ファイルをコンパイルすると，このような図が得られます。 <img src="../../../../image/g0.png" /></p>
 <p>しかし，軸ラベルのマイナス記号がハイフンになっているのが気になります。 そこで，<code>scales</code>パッケージの関数を参考にして，以下のような関数をでっち上げました。</p>
 <pre class="r"><code>latex_labels &lt;- function(x){
@@ -108,8 +106,6 @@ print(g1)</code></pre>
 <pre class="r"><code>tikz(file = &quot;g1.tex&quot;, width=7, height=5, standAlone=TRUE)
   print(g1)
 dev.off()</code></pre>
-<pre><code>## quartz_off_screen 
-##                 2</code></pre>
 <p>結果は下図のようになります。 ハイフンではなく，マイナス記号になっていますね（軸タイトルの文字も，数式フォントになっています）。 <img src="../../../../image/g1.png" /></p>
 <p>あまり美しい方法ではないですが，まぁ，このようなやり方もある，ということで。</p>
 
