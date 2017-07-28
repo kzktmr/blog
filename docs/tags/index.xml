@@ -23,18 +23,36 @@
     <item>
       <title>Ggplot2</title>
       <link>/tags/ggplot2/</link>
-      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/tags/ggplot2/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>Latex</title>
+      <link>/tags/latex/</link>
+      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/latex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tikzdevice</title>
+      <link>/tags/tikzdevice/</link>
+      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tikzdevice/</guid>
       <description></description>
     </item>
     
