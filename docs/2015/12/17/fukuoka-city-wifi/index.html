@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Fukuoka City Wifi の使用状況を可視化する &middot; </title>
+        <meta name="description" content="福岡市のCKANに， Fukuoka City Wi-Fi 利用状況という 興味深いデータが掲載されていました。このデータをRで少し触ってみました。 以下のライブラリを使います。">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.25.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="../../../../dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                            </h1>
+                        
+                        <a class="button-square" href="../../../../index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="kzktmr.github.io" href="https://kzktmr.github.io">kzktmr.github.io</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Fukuoka City Wifi の使用状況を可視化する</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2015-12-17" itemprop="datePublished">Thu, Dec 17, 2015</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="" itemprop="url" rel="author"></a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <p><a href="http://ckan.open-governmentdata.org">福岡市のCKAN</a>に， <a href="http://ckan.open-governmentdata.org/dataset/40130wifi-access">Fukuoka City Wi-Fi 利用状況</a>という 興味深いデータが掲載されていました。このデータを<strong>R</strong>で少し触ってみました。</p>
+<p>以下のライブラリを使います。</p>
+<pre class="r"><code>library(readr)
+library(data.table)
+library(Nippon)
+library(ggplot2)</code></pre>
+<p>データは，Fukuoka City Wi-Fi各拠点の1時間ごとの利用状況（認証回数）のデータです。 2015年8月〜10月の3カ月分のデータが公開されていました（2015年12月17日現在）。</p>
+<p>まずはデータをダウンロードし，整形します。 さらに，拠点が鉄道駅かどうか，その日が休日（土日祝日）に当たるかというダミー変数を付け加えておきます（祝日の判定のために，<code>Nippon</code>パッケージの<code>is.jholiday()</code>関数をすべての日付に適用するという効率の悪いことをやっているので，ちょっと処理に時間がかかります）。</p>
+<pre class="r"><code>filename &lt;- c(
+  &quot;http://ckan.open-governmentdata.org/dataset/67ac28a6-8e56-466b-957b-c41300da3d58/resource/44b727d5-19ae-4275-bb98-8bd32211a671/download/201408access.csv&quot;,
+  &quot;http://ckan.open-governmentdata.org/dataset/67ac28a6-8e56-466b-957b-c41300da3d58/resource/50c81208-2909-477c-a1f5-6759c2ce5792/download/201409access.csv&quot;,
+  &quot;http://ckan.open-governmentdata.org/dataset/67ac28a6-8e56-466b-957b-c41300da3d58/resource/12e32ad3-1eda-4bc1-a86c-4f5f533e083a/download/201410access.csv&quot;
+)
+d &lt;- lapply(filename, read_csv, col_types=paste0(&quot;cc&quot;, paste(rep(&quot;i&quot;, 25), collapse=&quot;&quot;)))
+d &lt;- rbindlist(d)
+colnames(d) &lt;- c(&quot;name&quot;, &quot;date&quot;, &quot;total&quot;, paste0(&quot;t&quot;, sprintf(&quot;%02d&quot;, 0:23)))
+d$total &lt;- NULL
+d$name &lt;- sjis2utf8(d$name)
+d$date &lt;- sjis2utf8(d$date)
+d &lt;- d[d$date!=&quot;合計&quot;,]
+d$date &lt;- as.Date(d$date, &quot;%Y%m%d&quot;)
+d$station &lt;- grepl(&quot;駅$&quot;, d$name)
+d$name &lt;- sub(&quot;　&quot;, &quot; &quot;, d$name)
+d$name &lt;- sub(&quot;駅$&quot;, &quot;&quot;, d$name)
+d$weekday &lt;- !(is.jholiday(d$date) | (weekdays(d$date) %in% c(&quot;土曜日&quot;, &quot;日曜日&quot;)))</code></pre>
+<p>グラフはggplot2で描くので，データをmeltしておきます。</p>
+<pre class="r"><code>md &lt;- melt(d, id.vars=c(&quot;name&quot;, &quot;date&quot;, &quot;station&quot;, &quot;weekday&quot;))</code></pre>
+<p>グラフに日本語を表示するためのおまじない。</p>
+<pre class="r"><code>old &lt;- theme_set(theme_gray(base_family=&quot;HiraKakuProN-W3&quot;))</code></pre>
+<p>まずは認証回数ランキングから。 赤は休日，青は平日の拠点ごとの認証回数を示しています。 駅では，やはり博多，天神での利用が多いことがわかります。 市営地下鉄七隈線での利用は低調のようです。</p>
+<pre class="r"><code>ggplot(md[md$station,], aes(x=reorder(name, value, sum), weight=value, fill=weekday)) +
+  geom_bar() + coord_flip() + labs(x=&quot;拠点&quot;, y=&quot;認証回数&quot;, fill=&quot;平日&quot;)</code></pre>
+<p><img src="../../../../post/2015-12-17-Fukuoka-City-Wifi_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>駅以外では，福岡空港での利用が目立っています。</p>
+<pre class="r"><code>ggplot(md[!md$station,], aes(x=reorder(name, value, sum), weight=value, fill=weekday)) +
+  geom_bar() + coord_flip() + labs(x=&quot;拠点&quot;, y=&quot;認証回数&quot;, fill=&quot;平日&quot;)</code></pre>
+<p><img src="../../../../post/2015-12-17-Fukuoka-City-Wifi_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>次に，時系列での認証回数の推移を見てみましょう。 2015年8月1日から10月31日までの間，Fukuoka City Wifi の認証回数は上昇傾向にあったことがわかります。 休日は平日に比べ認証回数が少ないこと，またそのような休日と平日の差は駅以外の拠点ではあまり見られないこともわかります。</p>
+<pre class="r"><code>ggplot(md, aes(x=date, weight=value, fill=station)) + geom_bar(binwidth=1) +
+  labs(x=&quot;日付&quot;, y=&quot;認証回数&quot;, fill=&quot;駅&quot;)</code></pre>
+<p><img src="../../../../post/2015-12-17-Fukuoka-City-Wifi_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>最後に時間帯別の認証回数のグラフを見てみましょう。 朝と夕方に利用のピークがありますが，そのようなピークは， 駅以外の施設での利用や休日での利用にはあまり見られないようです。</p>
+<pre class="r"><code>ggplot(md, aes(x=variable, weight=value, fill=station)) + geom_bar() + 
+  labs(x=&quot;時間帯&quot;, y=&quot;認証回数&quot;, fill=&quot;駅&quot;)</code></pre>
+<p><img src="../../../../post/2015-12-17-Fukuoka-City-Wifi_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(md, aes(x=variable, weight=value, fill=weekday)) + geom_bar() + 
+  labs(x=&quot;時間帯&quot;, y=&quot;認証回数&quot;, fill=&quot;平日&quot;)</code></pre>
+<p><img src="../../../../post/2015-12-17-Fukuoka-City-Wifi_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p>もう少しいろいろ詳しく見てみたいところですが，今日はここまで。</p>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="../../../../tags/r/">R</a>, 
+            
+                <a href="../../../../tags/ggplot2/">ggplot2</a>, 
+            
+                <a href="../../../../tags/fukuoka/">Fukuoka</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Fukuoka%20City%20Wifi%20%e3%81%ae%e4%bd%bf%e7%94%a8%e7%8a%b6%e6%b3%81%e3%82%92%e5%8f%af%e8%a6%96%e5%8c%96%e3%81%99%e3%82%8b&url=%2f2015%2f12%2f17%2ffukuoka-city-wifi%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2015%2f12%2f17%2ffukuoka-city-wifi%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2015%2f12%2f17%2ffukuoka-city-wifi%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2016 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../../../../js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="../../../../js/jquery.fitvids.js"></script>
+        <script src="../../../../js/scripts.js"></script>
+    </body>
+</html>
+
