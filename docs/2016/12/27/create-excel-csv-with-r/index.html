@@ -116,7 +116,7 @@ write_excel_csv(hoge, &quot;hoge_win.csv&quot;)</code></pre>
 <p><code>Gist</code>に置いてあります。リンクは<a href="https://gist.github.com/kzktmr/f8f6c4447ede5ee56418fe4c2b136594">こちら</a>。</p>
 <pre class="r"><code>library(devtools)
 source_gist(&quot;f8f6c4447ede5ee56418fe4c2b136594&quot;, filename = &quot;write_excel_mac_csv.R&quot;)</code></pre>
-<p>これで，<code>BOM</code>付き<code>UTF-16LE</code>の<code>tsv</code>が出力されます。<code>tsv</code>フィイルなのですが，拡張子は<code>.csv</code>なので（<code>Excel</code>に関連づけられているので）ダブルクリックで開ける，という少々トリッキーな感じがやや気持ち悪いですが。</p>
+<p>これで，<code>BOM</code>付き<code>UTF-16LE</code>の<code>tsv</code>が出力されます。実体は<code>tsv</code>フィイルなのですが拡張子が<code>.csv</code>なので（<code>Excel</code>に関連づけられているので），ダブルクリックで開ける，という少々トリッキーな感じがやや気持ち悪いですが。</p>
 <pre class="r"><code>write_excel_mac_csv(hoge, &quot;hoge_mac.csv&quot;)</code></pre>
 </div>
 </div>
