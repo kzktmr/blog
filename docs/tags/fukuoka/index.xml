@@ -6,10 +6,19 @@
     <description>Recent content in Fukuoka on kzktmr&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Thu, 17 Dec 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Dec 2015 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/fukuoka/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fukuoka City Wifi の使用状況を可視化する（その2）</title>
+      <link>/2015/12/22/fukuoka-city-wifi-2/</link>
+      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/2015/12/22/fukuoka-city-wifi-2/</guid>
+      <description>福岡市のCKANに， Fukuoka City Wi-Fi 利用状況という 興味深いデータが掲載されていました。このデータをRで少し触ってみました。 以下のライブラリを使います。</description>
+    </item>
     
     <item>
       <title>Fukuoka City Wifi の使用状況を可視化する</title>

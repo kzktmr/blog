@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Fukuoka City Wifi の使用状況を可視化する（その2） &middot; </title>
+        <meta name="description" content="福岡市のCKANに， Fukuoka City Wi-Fi 利用状況という 興味深いデータが掲載されていました。このデータをRで少し触ってみました。 以下のライブラリを使います。">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.25.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="../../../../dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                            </h1>
+                        
+                        <a class="button-square" href="../../../../index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="kzktmr.github.io" href="https://kzktmr.github.io">kzktmr.github.io</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Fukuoka City Wifi の使用状況を可視化する（その2）</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2015-12-22" itemprop="datePublished">Tue, Dec 22, 2015</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="" itemprop="url" rel="author"></a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <p><a href="http://ckan.open-governmentdata.org">福岡市のCKAN</a>に， <a href="http://ckan.open-governmentdata.org/dataset/40130wifi-access">Fukuoka City Wi-Fi 利用状況</a>という 興味深いデータが掲載されていました。このデータを<strong>R</strong>で少し触ってみました。</p>
+<p>以下のライブラリを使います。</p>
+<pre class="r"><code>library(readr)
+library(data.table)
+library(dplyr)
+library(ggplot2)</code></pre>
+<p>データは，Fukuoka City Wi-Fi各拠点の1時間ごとの利用状況（認証回数）のデータです。 2015年8月〜10月の3カ月分のデータが公開されていました（2015年12月22日現在）。</p>
+<p>今回は，駅のデータに着目し，駅ごとの Fukuoka City Wi-fi の利用状況と駅の乗車人員との関係 について見てみたいと思います。</p>
+<p>まずはデータをダウンロードし，整形します。</p>
+<pre class="r"><code>filename &lt;- c(
+  &quot;http://ckan.open-governmentdata.org/dataset/67ac28a6-8e56-466b-957b-c41300da3d58/resource/44b727d5-19ae-4275-bb98-8bd32211a671/download/201408access.csv&quot;,
+  &quot;http://ckan.open-governmentdata.org/dataset/67ac28a6-8e56-466b-957b-c41300da3d58/resource/50c81208-2909-477c-a1f5-6759c2ce5792/download/201409access.csv&quot;,
+  &quot;http://ckan.open-governmentdata.org/dataset/67ac28a6-8e56-466b-957b-c41300da3d58/resource/12e32ad3-1eda-4bc1-a86c-4f5f533e083a/download/201410access.csv&quot;
+)
+d &lt;- lapply(filename, read_csv, col_types=paste0(&quot;cc&quot;, paste(rep(&quot;i&quot;, 25), collapse=&quot;&quot;)))
+d &lt;- rbindlist(d)
+d &lt;- d[,1:3, with=FALSE] 
+colnames(d) &lt;- c(&quot;name&quot;, &quot;date&quot;, &quot;total&quot;)
+d$name &lt;- iconv(d$name, &quot;sjis&quot;, &quot;utf8&quot;)
+d$date &lt;- iconv(d$date, &quot;sjis&quot;, &quot;utf8&quot;)
+d &lt;- d[d$date==&quot;合計&quot;,]
+d$station &lt;- grepl(&quot;駅$&quot;, d$name)
+d$name &lt;- sub(&quot;　&quot;, &quot; &quot;, d$name)
+d$name &lt;- sub(&quot;駅$&quot;, &quot;&quot;, d$name)
+d &lt;- d %&gt;% filter(station) %&gt;% group_by(name) %&gt;% summarise(total=sum(total)) %&gt;% as.data.frame()</code></pre>
+<p>次に福岡市内の鉄道駅の入場者数データ（csv）を読み込みます。 これは，各社のウェブサイトに掲載されている平成26年度駅別乗車人員のデータ （ただし西鉄は乗降人員のデータしか公開されていないので， それを2で割って乗車人員の数字とみなすことにしました）を整理したものです。</p>
+<ul>
+<li>JR九州 <a href="https://www.jrkyushu.co.jp/profile/outline/data.jsp">交通・営業データ</a></li>
+<li>福岡市交通局 <a href="http://subway.city.fukuoka.lg.jp/subway/management/transport.php">運輸実績</a></li>
+<li>西鉄 <a href="http://www.nishitetsu.co.jp/group/enterprise_1.html">鉄道事業</a></li>
+</ul>
+<pre class="r"><code>fn &lt;- &quot;https://www.dropbox.com/s/d3iwiwx3mzxl02v/passenger.csv?dl=1&quot;
+s &lt;- read_csv(fn, col_names=FALSE, col_types=&quot;cci&quot;)
+colnames(s) &lt;- c(&quot;company&quot;, &quot;station&quot;, &quot;passenger&quot;)
+s$name &lt;- paste(s$company, s$station)</code></pre>
+<p>データをマージします。 また，Wi-fi 利用状況（認証回数）も1日当たりの数字に直しておきましょう。</p>
+<pre class="r"><code>d &lt;- merge(d, s, by=&quot;name&quot;)
+d$total &lt;- d$total/92</code></pre>
+<p>とりあえず散布図を見てみます。 まず，グラフに日本語を表示するためのおまじないから。</p>
+<pre class="r"><code>old &lt;- theme_set(theme_gray(base_family=&quot;HiraKakuProN-W3&quot;))</code></pre>
+<pre class="r"><code>g &lt;- ggplot(d, aes(x=passenger, y=total, label=station, colour=company)) + geom_point() +
+  geom_text(size=3, vjust=2, check_overlap=TRUE, family=&quot;HiraKakuProN-W3&quot;) +
+  labs(x=&quot;乗車人員&quot;, y=&quot;認証回数&quot;, colour=&quot;会社&quot;) + geom_smooth(method=&quot;lm&quot;)
+g</code></pre>
+<p><img src="../../../../post/2015-12-22-Fukuoka-City-Wifi-2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>全体としては駅の乗車人員と Fukuoka City Wi-fi の認証回数に正の相関が見られます。 当たり前ですが，駅の乗車人員が多いほど，Wi-fi 利用者も多いようです。</p>
+<p>しかし，博多や天神を除けば，図の左下にデータが固まっていますので，対数軸にしてみます。</p>
+<pre class="r"><code>g + scale_x_log10() + scale_y_log10()</code></pre>
+<p><img src="../../../../post/2015-12-22-Fukuoka-City-Wifi-2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>博多や天神といった乗車人員の多い駅は，どういうわけか，乗車人員の多さに対して Wi-fi の認証回数が少ないようです。 そこで，1日の平均乗車人員が5万人を超える駅を除いて同じ散布図を書いてみます。</p>
+<pre class="r"><code>g &lt;- ggplot(filter(d, passenger&lt;50000), aes(x=passenger, y=total, label=station, colour=company)) + geom_point() +
+  geom_text(size=3, vjust=2, check_overlap=TRUE, family=&quot;HiraKakuProN-W3&quot;) +
+  labs(x=&quot;乗車人員&quot;, y=&quot;認証回数&quot;, colour=&quot;会社&quot;) + geom_smooth(method=&quot;lm&quot;)
+g</code></pre>
+<p><img src="../../../../post/2015-12-22-Fukuoka-City-Wifi-2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>JR九州の駅と福岡市交通局の駅で，回帰直線の傾きが大きく異なります。 また駅に着目すると，乗り換え駅である中洲川端駅で，Wi-fi認証回数が多い一方で， 末端駅である福岡空港駅，天神南駅，橋本駅，貝塚駅では，乗車人員に比べて Wi-fi 認証回数が少ないようにも見えます。</p>
+<pre class="r"><code>g + scale_x_log10() + scale_y_log10()</code></pre>
+<p><img src="../../../../post/2015-12-22-Fukuoka-City-Wifi-2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>対数軸にするとこんな感じ。地下鉄空港線と箱崎線，七隈線で傾向が違うような感じもしますが， この差を説明するのは今後の課題ということにしたいと思います。</p>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="../../../../tags/r/">R</a>, 
+            
+                <a href="../../../../tags/ggplot2/">ggplot2</a>, 
+            
+                <a href="../../../../tags/fukuoka/">Fukuoka</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Fukuoka%20City%20Wifi%20%e3%81%ae%e4%bd%bf%e7%94%a8%e7%8a%b6%e6%b3%81%e3%82%92%e5%8f%af%e8%a6%96%e5%8c%96%e3%81%99%e3%82%8b%ef%bc%88%e3%81%9d%e3%81%ae2%ef%bc%89&url=%2f2015%2f12%2f22%2ffukuoka-city-wifi-2%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2015%2f12%2f22%2ffukuoka-city-wifi-2%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2015%2f12%2f22%2ffukuoka-city-wifi-2%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2016 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../../../../js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="../../../../js/jquery.fitvids.js"></script>
+        <script src="../../../../js/scripts.js"></script>
+    </body>
+</html>
+
