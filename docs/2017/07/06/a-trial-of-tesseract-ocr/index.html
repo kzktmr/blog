@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Tesseract OCR を試してみた &middot; Kazuki Tamura</title>
+        <meta name="description" content="Tesseract OCR という open source の OCR エンジンを試してみた。 インストールは Homebrew でできる。 brew install tesseract 英語以外の言語で OCR を行うには，教師データを用意する必要がある。 ここか">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.25.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="../../../../dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                            </h1>
+                        
+                        <a class="button-square" href="../../../../index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/kzktmr">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="kzktmr.github.io" href="https://kzktmr.github.io">kzktmr.github.io</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Tesseract OCR を試してみた</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-07-06" itemprop="datePublished">Thu, Jul 6, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://kzktmr.github.io" itemprop="url" rel="author">Kazuki Tamura</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+<!-- /BLOGDOWN-BODY-BEFORE -->
+<p><a href="https://github.com/tesseract-ocr/tesseract"><code>Tesseract OCR</code></a> という open source の OCR エンジンを試してみた。 インストールは <code>Homebrew</code> でできる。</p>
+<pre class="sh"><code>brew install tesseract</code></pre>
+<p>英語以外の言語で OCR を行うには，教師データを用意する必要がある。 <a href="https://github.com/tesseract-ocr/tessdata/tree/3.04.00">ここ</a>から <code>jpn.traineddata</code> をダウンロードし，適切なフォルダへ移動する。</p>
+<pre class="sh"><code>mv ~/Downloads/jpn.traineddata /usr/local/Cellar/tesseract/3.05.01/share/tessdata/</code></pre>
+<p>コマンドラインから以下を実行すると，</p>
+<pre class="sh"><code>tesseract 346.png out -l jpn</code></pre>
+<p><code>out.txt</code> というファイルが生成される。 <code>346.png</code> は青空文庫から夏目漱石の「三四郎」をブラウザで表示し，スクリーンショットを撮ったもの。 <img src="../../../../image/346.png" alt="元画像" /> 結果は以下の通り。</p>
+<pre><code>三四郎
+夏日漱石
+
++甘次
+
+う と う と と Lて甘が萱めろと女はいつのまにか` 魔のじいさんと話を始めていろ〟 このじいさんはたLかに前の前の駅から乗ったいなか者で
+ぁろ〟 発車ま ぎゎに詣~ 声を出Lて勲け込んで来て` いきなり 硫をぬいだと思った ら背中にぉ〝蘂あぁとがいっぼいぁったので` 一四}髏の記億
+に残つていろ〟 じいさんヵ軒をふいて` 肌を人れて` 女の魔に硬をかけたまでょ〈注意Lて見ていたく らいでぁろ〟
+
+女とは京都からの柑乗りでぁろ〟 乗った時から三四郎の甘についた〟 第一色ヵゞ黒い〟 三四郎は酬から川偏縞に移って、 だんだん慕太阪へ近
+づいて来石ぅちに、 女の色ゑゞ次第に日く なろのでいつのまにか伽を逮のく ょうな哀れを厘じていた〟 それでこの女が車室にはいって米た時
+
+董“ラL“ラいろ
+
+は` なんとな〈異粒の味方を得だ心持ちがLた〟 この女の色はじっさい九 州 色でぁった〟
+土&quot;鵠のぉ晃さんと同じ色でぁろ〟 国を立つまぎゎまでは、 ぉ光さんは、 ぅ ろさい女でぁった〟 そほを離れろのカ受太ぃにぁりがたかった〟 け
+れども` こぅLてみろと` ぉ光さんのょうなのもけっLて臺〈 はない〟
+
+ただ願だちからいう と` この女のほうがょほと上等でぁろ〟 …こ締ま りがぁろ〟 甘がはっさ り Lていろ〟 額ヵゞぉ光さんのょ ラにだだっ広く な
+い〟 なんとな〈いい心持ちにできぁがっていろ〟 それ 四郎は丘分に一度ぐらいは甘を上げて女の方を見ていた〟 時々は女と且分の甘がゅさ
+ぁたろこと もぁつた〟 じいさんヵ汝の魔へ腰をかけた時などは` もっと も注意Lて` できろだけ長いぁいだ` 女の肝を見ていた〟 その時女は
+
+にこ り と笑って、 さぁぉかけと菖ってじいさんに席を譲っていた〟 それからLばら 〈 Lて、 四郎は眠〈 なフて蟹てLまったのでぁ石〝</code></pre>
+<p>精度はそれほど高くない。ルビなんかはほとんど読み取れてない。</p>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Tesseract%20OCR%20%e3%82%92%e8%a9%a6%e3%81%97%e3%81%a6%e3%81%bf%e3%81%9f&url=%2f2017%2f07%2f06%2fa-trial-of-tesseract-ocr%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f07%2f06%2fa-trial-of-tesseract-ocr%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2017%2f07%2f06%2fa-trial-of-tesseract-ocr%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2017 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../../../../js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="../../../../js/jquery.fitvids.js"></script>
+        <script src="../../../../js/scripts.js"></script>
+    </body>
+</html>
+
