@@ -27,7 +27,6 @@ content
 .DS_Store
 archetypes
 *.R
-*.Rproj
 blogdown
 *.toml
 public
