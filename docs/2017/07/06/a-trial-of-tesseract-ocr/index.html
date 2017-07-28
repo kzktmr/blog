@@ -110,6 +110,15 @@
 
 にこ り と笑って、 さぁぉかけと菖ってじいさんに席を譲っていた〟 それからLばら 〈 Lて、 四郎は眠〈 なフて蟹てLまったのでぁ石〝</code></pre>
 <p>精度はそれほど高くない。ルビなんかはほとんど読み取れてない。</p>
+<p>例によって，<code>R</code>から<code>tesseract</code>を使うための<a href="https://cran.r-project.org/package=tesseract">パッケージ</a>が用意されている。</p>
+<pre class="r"><code>library(tesseract)</code></pre>
+<p>しかし，日本語の教師データを使おうとしても，うまくいかない。</p>
+<pre class="r"><code>jpn &lt;- tesseract(language = &quot;jpn&quot;, datapath = &quot;/usr/local/Cellar/tesseract/3.05.01/share/tessdata/&quot;)</code></pre>
+<pre class="text"><code>Failed loading language &#39;jpn&#39;
+Tesseract couldn&#39;t load any languages!
+ tesseract_engine_internal(datapath, language) でエラー: 
+  Unable to find training data for: jpn</code></pre>
+<p>残念。</p>
 
 </div>
 
