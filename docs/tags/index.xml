@@ -50,7 +50,7 @@
     <item>
       <title>Ggplot2</title>
       <link>/tags/ggplot2/</link>
-      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/ggplot2/</guid>
       <description></description>
@@ -86,9 +86,18 @@
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sf</title>
+      <link>/tags/sf/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/sf/</guid>
       <description></description>
     </item>
     

@@ -6,10 +6,19 @@
     <description>Recent content in Ggplot2 on kzktmr&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 04 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>sfとggplotで地図を描く</title>
+      <link>/2017/09/04/draw-map-with-sf-and-ggplot/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/04/draw-map-with-sf-and-ggplot/</guid>
+      <description>はじめに Rで地理情報を扱うのにmatptoolsパッケージを使っていたのですが， いつの頃からか，例えばreadShapePoly()でSha</description>
+    </item>
     
     <item>
       <title>ggplot2を使って都道府県塗り分け地図を描く関数</title>

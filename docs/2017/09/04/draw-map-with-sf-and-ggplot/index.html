@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>sfとggplotで地図を描く &middot; Kazuki Tamura</title>
+        <meta name="description" content="はじめに Rで地理情報を扱うのにmatptoolsパッケージを使っていたのですが， いつの頃からか，例えばreadShapePoly()でSha">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.25.1" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="../../../../dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                            </h1>
+                        
+                        <a class="button-square" href="../../../../index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/kzktmr">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="kzktmr.github.io" href="https://kzktmr.github.io">kzktmr.github.io</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">sfとggplotで地図を描く</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-09-04" itemprop="datePublished">Mon, Sep 4, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://kzktmr.github.io" itemprop="url" rel="author">Kazuki Tamura</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <div class="section level2">
+<h2>はじめに</h2>
+<p><strong>R</strong>で地理情報を扱うのに<code>matptools</code>パッケージを使っていたのですが， いつの頃からか，例えば<code>readShapePoly()</code>でShapeファイルを読み込もうとすると，</p>
+<pre class="text"><code>use rgdal::readOGR or sf::st_read </code></pre>
+<p>という警告メッセージが表示されるようになりました。 また<code>sf</code>は<code>ggplot</code>（というか<code>tidyverse</code>）と親和性が高いらしいということもあり， <code>sf</code>を試すことにしました。</p>
+<pre class="r"><code>library(tidyverse)
+library(sf)</code></pre>
+</div>
+<div class="section level2">
+<h2>データ</h2>
+<p>地図データ（海岸線データ）は，<a href="http://www.naturalearthdata.com">Natural Earth</a>のデータをRで利用する<code>rnaturalearth</code>パッケージで入手することにします。 また，ポイントデータとして，<a href="http://nlftp.mlit.go.jp/ksj/">国土数値情報</a>からダウンロードした空港の位置データ（<a href="http://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-v1_4.html">空港時系列データ</a>）を例に使います。</p>
+<p>また，空港データは，現在共用中の空港のデータだけに絞っておきます。</p>
+<pre class="r"><code>library(rnaturalearth)
+coastline &lt;- ne_countries(scale = 50, country = &quot;japan&quot;, returnclass = &quot;sf&quot;)
+airport &lt;- st_read(&quot;~/Downloads/N08-16_GML/N08-16_AirportPoint.shp&quot;, options = c(&quot;ENCODING=CP932&quot;)) %&gt;%
+  filter(N08_023 == 9999)</code></pre>
+<p>それっぽい地図にするために，投影変換しておきます。</p>
+<pre class="r"><code>lambert &lt;- &quot;+proj=lcc +lat_1=30 +lat_2=40 +lat_0=35 +lon_0=135 +datum=WGS84 +units=km +no_defs&quot;
+coastline &lt;- st_transform(coastline, lambert)
+airport &lt;- st_transform(airport, lambert)</code></pre>
+</div>
+<div class="section level2">
+<h2>地図描画</h2>
+<p>とりあえず，そのまま<code>ggplot::geom_sf()</code>を使ってプロットしてみます。</p>
+<pre class="r"><code>ggplot() + geom_sf(data = coastline) + geom_sf(data = airport)</code></pre>
+<p><img src="../../../../post/2017-09-04-sf-ggplot_files/figure-html/drawmap-1.png" width="672" /></p>
+<p>デフォルトできれいなグラフを描く<code>ggplot</code>しては，あまりよい地図には見えません。 特に，ポリゴンデータ（海岸線データ）はそれなりに描画してくれていますが，ポイントデータ（空港データ）はあまりうまく扱えないようです。</p>
+<p>そこで，ポイントデータについでは，<code>geom_sf()</code>の利用をあきらめ，<code>geom_point()</code>でプロットすることにします。 そのために，<code>st_coordinates()</code>を使って，<code>sf</code>データから緯度経度の情報を抜き出してデータフレームを作ります。</p>
+<pre class="r"><code>airport_df &lt;- airport %&gt;% st_coordinates() %&gt;% as.tibble() 
+ggplot() + geom_sf(data = coastline) + geom_point(aes(x = X, y = Y), data = airport_df) +
+  theme(axis.title = element_blank())</code></pre>
+<p><img src="../../../../post/2017-09-04-sf-ggplot_files/figure-html/drawmap2-1.png" width="672" /></p>
+<p>何とかそれらしい地図になってきました。 あとは，色やサイズを調整したり<code>ggrepel</code>パッケージを使って空港名を書き込んだりしたら完成です。</p>
+<pre class="r"><code>library(stringr)
+airport_df &lt;- airport_df %&gt;%
+  mutate(name = str_replace_all(airport$N08_019, &quot;国際|空港|飛行場&quot;, &quot;&quot;))
+library(ggrepel)
+ggplot() +
+  theme_gray(base_family = &quot;SourceHanCodeJP-Regular&quot;) +
+  geom_sf(data = coastline, fill = gray(.7), colour = gray(.7)) +
+  geom_point(aes(x = X, y = Y), data = airport_df, colour = gray(.3), size = 1) +
+  geom_text_repel(aes(x = X, y = Y, label = name), colour = gray(.3),
+                  data = airport_df, family = &quot;SourceHanCodeJP-Regular&quot;, 
+                  segment.size = .2, size = 2) +
+  theme(axis.title = element_blank())</code></pre>
+<p><img src="../../../../post/2017-09-04-sf-ggplot_files/figure-html/drawmap3-1.png" width="672" /></p>
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="../../../../tags/ggplot2/">ggplot2</a>, 
+            
+                <a href="../../../../tags/r/">R</a>, 
+            
+                <a href="../../../../tags/sf/">sf</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=sf%e3%81%a8ggplot%e3%81%a7%e5%9c%b0%e5%9b%b3%e3%82%92%e6%8f%8f%e3%81%8f&url=%2f2017%2f09%2f04%2fdraw-map-with-sf-and-ggplot%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f09%2f04%2fdraw-map-with-sf-and-ggplot%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2017%2f09%2f04%2fdraw-map-with-sf-and-ggplot%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="kzktmr&#39;s blog" href="../../../../">kzktmr&#39;s blog</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2017 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../../../../js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script src="../../../../js/jquery.fitvids.js"></script>
+        <script src="../../../../js/scripts.js"></script>
+    </body>
+</html>
+

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2017/09/04/draw-map-with-sf-and-ggplot/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/07/06/a-trial-of-tesseract-ocr/</loc>
     <lastmod>2017-07-06T00:00:00+00:00</lastmod>
   </url>
@@ -67,13 +72,13 @@
   </url>
   
   <url>
-    <loc>/tags/excel/</loc>
+    <loc>/categories/excel/</loc>
     <lastmod>2016-12-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/excel/</loc>
+    <loc>/tags/excel/</loc>
     <lastmod>2016-12-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -85,14 +90,14 @@
   </url>
   
   <url>
-    <loc>/tags/ggplot2/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <loc>/categories/ggplot2/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/ggplot2/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -115,13 +120,13 @@
   </url>
   
   <url>
-    <loc>/tags/latex/</loc>
+    <loc>/categories/latex/</loc>
     <lastmod>2016-11-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/latex/</loc>
+    <loc>/tags/latex/</loc>
     <lastmod>2016-11-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -140,19 +145,31 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-07-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2017-07-06T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/sf/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/sf/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -169,20 +186,20 @@
   </url>
   
   <url>
-    <loc>/tags/tikzdevice/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/tikzdevice/</loc>
     <lastmod>2016-11-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>/tags/tikzdevice/</loc>
+    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/</loc>
-    <lastmod>2017-07-06T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
