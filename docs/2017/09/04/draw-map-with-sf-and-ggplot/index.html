@@ -2,18 +2,20 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>sfとggplotで地図を描く &middot; Kazuki Tamura</title>
         <meta name="description" content="はじめに Rで地理情報を扱うのにmatptoolsパッケージを使っていたのですが， いつの頃からか，例えばreadShapePoly()でSha">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.25.1" />
+        <meta name="generator" content="Hugo 0.58.3" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link rel="stylesheet" href="../../../../dist/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
         
     </head>
     <body>
@@ -30,9 +32,10 @@
                         
                         <a class="button-square" href="../../../../index.xml"><i class="fa fa-rss"></i></a>
                         
-                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/kzktmr">
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/kzktmr" rel="me">
                                 <i class="fa fa-twitter"></i>
                             </a>
+                        
                         
                         
                         
@@ -60,7 +63,7 @@
         <header class="post-header">
     <h1 class="post-title" itemprop="name headline">sfとggplotで地図を描く</h1>
     
-    <p class="post-date">
+    <p class="post-date post-line">
         <span>Published <time datetime="2017-09-04" itemprop="datePublished">Mon, Sep 4, 2017</time></span>
         <span>by</span>
         <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
@@ -69,12 +72,16 @@
             </span>
         </span>
     </p>
+    
 </header>
 
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <div class="section level2">
+    
+
+
+<div class="section level2">
 <h2>はじめに</h2>
 <p><strong>R</strong>で地理情報を扱うのに<code>matptools</code>パッケージを使っていたのですが， いつの頃からか，例えば<code>readShapePoly()</code>でShapeファイルを読み込もうとすると，</p>
 <pre class="text"><code>use rgdal::readOGR or sf::st_read </code></pre>
@@ -196,8 +203,12 @@ ggplot() +
         </footer>
 
         <script src="../../../../js/jquery-1.11.3.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
         <script src="../../../../js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
         <script src="../../../../js/scripts.js"></script>
     </body>
 </html>

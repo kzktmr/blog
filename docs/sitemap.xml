@@ -3,8 +3,63 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/ggplot2/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/sf/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/sf/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/09/04/draw-map-with-sf-and-ggplot/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/tesseract/</loc>
+    <lastmod>2017-07-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -13,8 +68,38 @@
   </url>
   
   <url>
+    <loc>/categories/blog/</loc>
+    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/blogdown/</loc>
+    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/04/04/rebuild-blog-with-blogdown/</loc>
     <lastmod>2017-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/github/</loc>
+    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/github-pages/</loc>
+    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/excel/</loc>
+    <lastmod>2016-12-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/excel/</loc>
+    <lastmod>2016-12-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -23,8 +108,43 @@
   </url>
   
   <url>
+    <loc>/tags/choropleth-map/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2016/12/04/choropleth-map-of-japan-with-ggplot2/</loc>
     <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/japan/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/map/</loc>
+    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/latex/</loc>
+    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/latex/</loc>
+    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/tikzdevice/</loc>
+    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/tikzdevice/</loc>
+    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -33,8 +153,8 @@
   </url>
   
   <url>
-    <loc>/about/</loc>
-    <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+    <loc>/tags/fukuoka/</loc>
+    <lastmod>2015-12-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -43,164 +163,13 @@
   </url>
   
   <url>
-    <loc>/2015/12/17/fukuoka-city-wifi/</loc>
-    <lastmod>2015-12-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/blog/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/blogdown/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/choropleth-map/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/excel/</loc>
-    <lastmod>2016-12-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/excel/</loc>
-    <lastmod>2016-12-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/fukuoka/</loc>
-    <lastmod>2015-12-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/ggplot2/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/github/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/github-pages/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/japan/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/latex/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/latex/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/map/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/opendata/</loc>
     <lastmod>2015-12-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/sf/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/sf/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2017-04-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/tesseract/</loc>
-    <lastmod>2017-07-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/tikzdevice/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tikzdevice/</loc>
-    <lastmod>2016-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>/2015/12/17/fukuoka-city-wifi/</loc>
+    <lastmod>2015-12-17T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>

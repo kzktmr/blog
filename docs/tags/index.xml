@@ -6,80 +6,17 @@
     <description>Recent content in Tags on kzktmr&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 04 Apr 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Blogdown</title>
-      <link>/tags/blogdown/</link>
-      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/blogdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Choropleth Map</title>
-      <link>/tags/choropleth-map/</link>
-      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/choropleth-map/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Excel</title>
-      <link>/tags/excel/</link>
-      <pubDate>Tue, 27 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/excel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Fukuoka</title>
-      <link>/tags/fukuoka/</link>
-      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/fukuoka/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ggplot2</title>
+      <title>ggplot2</title>
       <link>/tags/ggplot2/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/ggplot2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Github Pages</title>
-      <link>/tags/github-pages/</link>
-      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/github-pages/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Japan</title>
-      <link>/tags/japan/</link>
-      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/japan/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Latex</title>
-      <link>/tags/latex/</link>
-      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/latex/</guid>
       <description></description>
     </item>
     
@@ -93,7 +30,7 @@
     </item>
     
     <item>
-      <title>Sf</title>
+      <title>sf</title>
       <link>/tags/sf/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -102,11 +39,74 @@
     </item>
     
     <item>
-      <title>Tikzdevice</title>
+      <title>blogdown</title>
+      <link>/tags/blogdown/</link>
+      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/blogdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github pages</title>
+      <link>/tags/github-pages/</link>
+      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/github-pages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Excel</title>
+      <link>/tags/excel/</link>
+      <pubDate>Tue, 27 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/excel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>choropleth map</title>
+      <link>/tags/choropleth-map/</link>
+      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/choropleth-map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Japan</title>
+      <link>/tags/japan/</link>
+      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/japan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>latex</title>
+      <link>/tags/latex/</link>
+      <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/latex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tikzdevice</title>
       <link>/tags/tikzdevice/</link>
       <pubDate>Mon, 28 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/tags/tikzdevice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fukuoka</title>
+      <link>/tags/fukuoka/</link>
+      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/fukuoka/</guid>
       <description></description>
     </item>
     

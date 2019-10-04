@@ -66,15 +66,6 @@
     </item>
     
     <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
-    </item>
-    
-    <item>
       <title>Fukuoka City Wifi の使用状況を可視化する（その2）</title>
       <link>/2015/12/22/fukuoka-city-wifi-2/</link>
       <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
