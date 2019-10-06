@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>RからでExcelで開けるCSVを出力する &middot; Kazuki Tamura</title>
-        <meta name="description" content="はじめに Rからcsvファイルを出力したとき，Excelがインストールされていて，csvがExcelに関連付けされている環境では，出力したcs">
+        <title>Khromaパッケージ &middot; Kazuki Tamura</title>
+        <meta name="description" content="Rのカラーパレットを探していて，良さそうなのを見つけたので，備忘録としてメモ。 パッケージの詳細は，こちらをご覧ください。 library(tidyverse) library(khroma) ggplotで作">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.58.3" />
@@ -61,10 +61,10 @@
 <div class="container">
     <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
         <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">RからでExcelで開けるCSVを出力する</h1>
+    <h1 class="post-title" itemprop="name headline">Khromaパッケージ</h1>
     
     <p class="post-date post-line">
-        <span>Published <time datetime="2016-12-27" itemprop="datePublished">Tue, Dec 27, 2016</time></span>
+        <span>Published <time datetime="2019-10-06" itemprop="datePublished">Sun, Oct 6, 2019</time></span>
         <span>by</span>
         <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
             <span itemprop="name">
@@ -81,51 +81,47 @@
     
 
 
-<div class="section level2">
-<h2>はじめに</h2>
-<p><code>R</code>から<code>csv</code>ファイルを出力したとき，<code>Excel</code>がインストールされていて，<code>csv</code>が<code>Excel</code>に関連付けされている環境では，出力した<code>csv</code>ファイルをダブルクリックすると<code>Excel</code>がファイルを開きますが，残念ながら文字化けしてしまいます。これは，出力したファイルのエンコードが「<code>UTF-8</code>」なのに，Excelが「<code>SHIFT-JIS</code>」だと思って開いてしまうことが原因のようです。</p>
-</div>
-<div class="section level2">
-<h2>方法</h2>
-<p>この問題を解決するには，どうすればいいかというと，</p>
-<ul>
-<li><a href="http://qiita.com/mashiro/items/0d0b9bbb0f4a6cca620c">Win/Mac どちらの Excel でも正しく開ける Unicode な csv の出力方法</a></li>
-</ul>
-<p>にあるように，</p>
-<ol style="list-style-type: decimal">
-<li><code>Windows</code>の場合は，<code>BOM</code>付き<code>UTF-8</code>の<code>csv</code>にする，</li>
-<li><code>Mac</code>の場合は，<code>BOM</code>付き<code>UTF-16LE</code>の<code>tsv</code>にする，</li>
-</ol>
-<p>と，うまくいくようです。<code>R</code>の場合，例えば以下のように実現することができます。</p>
-<div id="windows" class="section level3">
-<h3><code>Windows</code>の場合</h3>
-<p><code>readr</code>バッケージの<code>write_excel_csv()</code>関数を使いましょう。これで，<code>BOM</code>付き<code>UTF-8</code>の<code>csv</code>が出力されます。</p>
-<pre class="r"><code>library(readr)
-write_excel_csv(hoge, &quot;hoge_win.csv&quot;)</code></pre>
-</div>
-<div id="mac" class="section level3">
-<h3><code>Mac</code>の場合</h3>
-<p>残念ながら，<code>readr</code>パッケージにも<code>Mac</code>用の関数は用意されていないので，自分でなんとかするしかありません。<code>readr</code>パッケージの<code>format_tsv()</code>で作った文字列を<code>iconv()</code>で変換すればどうかな…，と思ったのですが，なぜか<code>R</code>の<code>iconv()</code>関数で<code>UTF-16LE</code>に変換しようとすると，エラーが出てうまくいきません。</p>
-<pre class="r"><code>iconv(&quot;hoge&quot;, &quot;UTF-8&quot;, &quot;UTF-16LE&quot;)</code></pre>
-<pre><code>## Error in iconv(&quot;hoge&quot;, &quot;UTF-8&quot;, &quot;UTF-16LE&quot;):  文字列の中に nul が埋め込まれています: &#39;h\0o\0g\0e\0&#39;</code></pre>
-<p>仕方がないので，<code>system()</code>からシステムの<code>iconv</code>を使って変換する関数を作ることにしました。</p>
-<pre class="r"><code>write_excel_mac_csv &lt;- function(x, path, na = &quot;NA&quot;){
-  tmp &lt;- tempfile()
-  readr::write_tsv(x, tmp, na = na)
-  path &lt;- paste0(&quot;&#39;&quot;, path, &quot;&#39;&quot;)
-  system(paste(&quot;(printf &#39;\xff\xfe&#39;; iconv -f utf-8 -t utf-16le&quot;, tmp, &quot;) &gt;&quot;, path))
-}</code></pre>
-<p><code>Gist</code>に置いてあります。リンクは<a href="https://gist.github.com/kzktmr/f8f6c4447ede5ee56418fe4c2b136594">こちら</a>。</p>
-<pre class="r"><code>library(devtools)
-source_gist(&quot;f8f6c4447ede5ee56418fe4c2b136594&quot;, filename = &quot;write_excel_mac_csv.R&quot;)</code></pre>
-<p>これで，<code>BOM</code>付き<code>UTF-16LE</code>の<code>tsv</code>が出力されます。実体は<code>tsv</code>フィイルなのですが拡張子が<code>.csv</code>なので（<code>Excel</code>に関連づけられているので），ダブルクリックで開ける，という少々トリッキーな感じがやや気持ち悪いですが。</p>
-<pre class="r"><code>write_excel_mac_csv(hoge, &quot;hoge_mac.csv&quot;)</code></pre>
-</div>
-</div>
-<div class="section level2">
-<h2>注意</h2>
-<p><code>write_excel_mac_csv()</code>で出力したファイルは，<code>Mac</code>だけでなく<code>Windwos</code>の<code>Excel</code>でも開けます（<code>write_excel_mac_csv()</code>関数は<code>Windows</code>では使えませんが）。</p>
-</div>
+<p>Rのカラーパレットを探していて，良さそうなのを見つけたので，備忘録としてメモ。 パッケージの詳細は，<a href="https://khroma.archaeo.science">こちら</a>をご覧ください。</p>
+<pre class="r"><code>library(tidyverse)
+library(khroma)</code></pre>
+<p><code>ggplot</code>で作図。</p>
+<pre class="r"><code>p1 &lt;- ggplot(midwest , aes(x = popdensity, y = percollege, color = state)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = &quot;loess&quot;, se = FALSE) +
+  theme_bw() + scale_x_log10()
+  
+p2 &lt;- ggplot(midwest, aes(x = percollege, fill = state)) +
+  geom_histogram(color = &quot;black&quot;, size = 0.25, bins = 30) +
+  theme_bw()
+
+p3 &lt;- ggplot(midwest, aes(x = state, y = percollege, fill = state)) +
+  geom_boxplot() +
+  theme_bw()
+
+p4 &lt;- states  &lt;- sf::st_as_sf(maps::map(&quot;county&quot;, plot = FALSE, fill = TRUE)) %&gt;% 
+  separate(ID, c(&quot;state&quot;, &quot;county&quot;), sep = &quot;,&quot;) %&gt;% 
+  filter(state %in% c(&quot;illinois&quot;, &quot;indiana&quot;, &quot;michigan&quot;, &quot;ohio&quot;, &quot;wisconsin&quot;)) %&gt;% 
+  mutate(state = str_to_upper(abbreviate(state, 2))) %&gt;% 
+  ggplot() + geom_sf(aes(fill = state)) + theme_bw()</code></pre>
+<p><code>khroma</code>のカラーパレット<code>bright</code>で着色すると，こんな感じ。</p>
+<pre class="r"><code>p1_khr &lt;- p1 + khroma::scale_color_bright()
+p2_khr &lt;- p2 + khroma::scale_fill_bright()
+p3_khr &lt;- p3 + khroma::scale_fill_bright()
+p4_khr &lt;- p4 + khroma::scale_fill_bright()
+
+gridExtra::grid.arrange(p1_khr, p2_khr, p3_khr, p4_khr, ncol = 2)</code></pre>
+<p><img src="../../../../post/2019-10-06-khroma_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>よく使う，<code>RColorBrewer</code>の<code>Set2</code>の場合。</p>
+<pre class="r"><code>p1_brw &lt;- p1 + scale_color_brewer(palette = &quot;Set2&quot;)
+p2_brw &lt;- p2 + scale_fill_brewer(palette = &quot;Set2&quot;)
+p3_brw &lt;- p3 + scale_fill_brewer(palette = &quot;Set2&quot;)
+p4_brw &lt;- p4 + scale_fill_brewer(palette = &quot;Set2&quot;)
+
+gridExtra::grid.arrange(p1_brw, p2_brw, p3_brw, p4_brw, ncol = 2)</code></pre>
+<p><img src="../../../../post/2019-10-06-khroma_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>ちなみに，デフォルトだとこんな感じ。</p>
+<pre class="r"><code>gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)</code></pre>
+<p><img src="../../../../post/2019-10-06-khroma_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 
 </div>
 
@@ -137,14 +133,14 @@ source_gist(&quot;f8f6c4447ede5ee56418fe4c2b136594&quot;, filename = &quot;write
             
                 <a href="../../../../tags/r/">R</a>, 
             
-                <a href="../../../../tags/excel/">Excel</a>
+                <a href="../../../../tags/ggplot2/">ggplot2</a>
             
         </p>
     
 
     <div class="share">
         
-            <a class="icon-twitter" href="https://twitter.com/share?text=R%e3%81%8b%e3%82%89%e3%81%a7Excel%e3%81%a7%e9%96%8b%e3%81%91%e3%82%8bCSV%e3%82%92%e5%87%ba%e5%8a%9b%e3%81%99%e3%82%8b&url=%2f2016%2f12%2f27%2fcreate-excel-csv-with-r%2f"
+            <a class="icon-twitter" href="https://twitter.com/share?text=Khroma%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8&url=%2f2019%2f10%2f06%2fkhroma%2f"
                 onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                 <i class="fa fa-twitter"></i>
                 <span class="hidden">Twitter</span>
@@ -152,7 +148,7 @@ source_gist(&quot;f8f6c4447ede5ee56418fe4c2b136594&quot;, filename = &quot;write
         
 
         
-            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2016%2f12%2f27%2fcreate-excel-csv-with-r%2f"
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2019%2f10%2f06%2fkhroma%2f"
                 onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                 <i class="fa fa-facebook"></i>
                 <span class="hidden">Facebook</span>
@@ -160,7 +156,7 @@ source_gist(&quot;f8f6c4447ede5ee56418fe4c2b136594&quot;, filename = &quot;write
         
 
         
-            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2016%2f12%2f27%2fcreate-excel-csv-with-r%2f"
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2019%2f10%2f06%2fkhroma%2f"
               onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
               <i class="fa fa-google-plus"></i>
                 <span class="hidden">Google+</span>
